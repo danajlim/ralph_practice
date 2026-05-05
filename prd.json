@@ -1,0 +1,92 @@
+{
+  "project": "YouTubeCommentAnalyzer",
+  "branchName": "ralph/youtube-comment-analyzer",
+  "description": "YouTube Comment Analyzer - Collect the latest 100 comments from a YouTube video and analyze them with an LLM to help creators understand audience sentiment and actionable feedback. No server, no login required.",
+  "techStack": {
+    "framework": "Vite + TypeScript (vanilla, no framework)",
+    "styling": "plain CSS",
+    "apis": [
+      "YouTube Data API v3 (key read from YOUTUBE_API_KEY env var via import.meta.env)",
+      "OpenAI API via openai npm package (key read from OPENAI_API_KEY env var via import.meta.env)"
+    ],
+    "deployment": "static files only — runs entirely in the browser"
+  },
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "Project setup and URL input UI",
+      "description": "As a YouTuber, I want a clean web page where I can enter a YouTube video URL and my API keys so I can start analyzing comments.",
+      "acceptanceCriteria": [
+        "Initialize Vite + TypeScript project (npm create vite)",
+        "Input field for YouTube video URL (supports youtube.com/watch?v= and youtu.be/ formats)",
+        "Read YOUTUBE_API_KEY and OPENAI_API_KEY from import.meta.env (set via .env.local)",
+        "Show clear error if either env var is missing",
+        "Analyze button that triggers the comment collection flow",
+        "Basic responsive CSS layout — clean and readable",
+        "npm run build and typecheck pass"
+      ],
+      "priority": 1,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-002",
+      "title": "Fetch latest 100 YouTube comments",
+      "description": "As a YouTuber, I want the app to collect the 100 most recent comments from my video so they can be analyzed.",
+      "acceptanceCriteria": [
+        "Extract video ID from YouTube URL (handle both youtube.com and youtu.be formats)",
+        "Call YouTube Data API v3 commentThreads.list to fetch up to 100 top-level comments",
+        "Store comment text, like count, and author name for each comment",
+        "Show a loading spinner while fetching",
+        "Show a user-friendly error if the API key is invalid, quota is exceeded, or the video is not found",
+        "Typecheck passes"
+      ],
+      "priority": 2,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-003",
+      "title": "Sentiment analysis — positive / negative / neutral",
+      "description": "As a YouTuber, I want each comment classified by sentiment so I can see the overall mood of my audience.",
+      "acceptanceCriteria": [
+        "Send all collected comments to OpenAI API in a single batch prompt",
+        "Each comment classified as 'positive', 'negative', or 'neutral'",
+        "Display sentiment breakdown: count and percentage for each label",
+        "Three summary stat cards styled with matching colors: green (positive), red (negative), gray (neutral)",
+        "Typecheck passes"
+      ],
+      "priority": 3,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-004",
+      "title": "Extract top praise, advice, and criticism comments",
+      "description": "As a YouTuber, I want to see the most notable comments grouped into praise, advice, and criticism so I know exactly what viewers are saying.",
+      "acceptanceCriteria": [
+        "From comments sorted by like count (descending), use OpenAI gpt-4.1-nano to classify each as 'praise', 'advice', 'criticism', or 'other'",
+        "Display top 5 comments per category (praise / advice / criticism) with comment text and like count",
+        "Each category rendered in its own clearly labeled section",
+        "Typecheck passes"
+      ],
+      "priority": 4,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-005",
+      "title": "Overall improvement summary",
+      "description": "As a YouTuber, I want a concise AI-generated summary of my strengths and areas to improve so I can act on the feedback quickly.",
+      "acceptanceCriteria": [
+        "OpenAI gpt-4.1-nano generates 3–5 bullet points of 'what you're doing well' based on comment themes",
+        "OpenAI gpt-4.1-nano generates 3–5 bullet points of 'areas to improve' based on comment themes",
+        "Summary section displayed at the top of results, above the sentiment stats",
+        "Typecheck passes"
+      ],
+      "priority": 5,
+      "passes": false,
+      "notes": ""
+    }
+  ]
+}

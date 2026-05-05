@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>YouTube 댓글 분석기</title>
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <header>
+        <h1>🎬 YouTube 댓글 분석기</h1>
+        <p>영상 URL을 입력하면 댓글 100개를 수집해서 AI로 분석해드려요</p>
+      </header>
+
+      <main>
+        <section class="input-section">
+          <div class="input-group">
+            <label for="youtube-url">YouTube 영상 URL</label>
+            <input
+              type="text"
+              id="youtube-url"
+              placeholder="https://www.youtube.com/watch?v=..."
+            />
+          </div>
+          <button id="analyze-btn">분석 시작</button>
+          <p id="error-msg" class="error hidden"></p>
+        </section>
+
+        <section id="results" class="hidden">
+          <div id="loading" class="hidden">
+            <div class="spinner"></div>
+            <p id="loading-text">댓글 수집 중...</p>
+          </div>
+          <div id="results-content"></div>
+        </section>
+      </main>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
